@@ -26,7 +26,7 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 app.get("/", (req, res) => {
-  res.send("<h1>List of all products</h1>");
+  res.send("<h1>Welcome to node server</h1>");
 });
 
 app.use("/users", userRoutes);
