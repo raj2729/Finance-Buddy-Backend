@@ -21,12 +21,20 @@ const emiSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    amount: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
     isPaid: {
       type: Boolean,
       required: true,
       default: false,
     },
     paidAt: {
+      type: Date,
+    },
+    lastDate: {
       type: Date,
     },
   },
