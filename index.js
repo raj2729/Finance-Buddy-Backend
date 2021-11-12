@@ -9,6 +9,7 @@ const userRoutes = require("./routes/userRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 // const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const otpRoutes = require("./routes/otpRoutes");
 
 // express application
 const app = express();
@@ -33,6 +34,7 @@ app.use("/users", userRoutes);
 app.use("/admin", adminRoutes);
 // app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/otp", otpRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`.cyan);

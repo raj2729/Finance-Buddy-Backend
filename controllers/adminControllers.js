@@ -107,6 +107,7 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
       <li>Customer Email Id : ${req.body.customerEmailId}</li>
       <li>Mobile Number : ${req.body.mobileNumber}</li>
       <li>Password : ${req.body.password}</li>
+      <li>Address : ${req.body.address}</li>
     </ul>
     <p>Please save your account details for future references</p>
     <p></p>
@@ -132,7 +133,7 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
       // send mail with defined transport object
       let mailOptions = {
         // from: '"Nodemailer Testing" <raj.sanghavi1@svkmmumbai.onmicrosoft.com>', // sender address
-        from: "Team Sinance Buddy",
+        from: "Team Finance Buddy",
         to: `${user.email}`, // list of receivers
         subject: "Registration Successful ✔", // Subject line
         // text: "Hello world?", // plain text body

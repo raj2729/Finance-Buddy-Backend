@@ -17,7 +17,7 @@ List of controllers
 const userLogin = asyncHandler(async (req, res) => {
   const { customerEmailId, password } = req.body;
   const user = await User.findOne({ customerEmailId });
-  if (customerEmailId === "admin@financeBuddy.com") {
+  if (customerEmailId == "admin@financeBuddy.com") {
     res.status(200).json({
       success: true,
       data: {
@@ -52,6 +52,10 @@ const userLogin = asyncHandler(async (req, res) => {
       res.status(404).json({
         success: false,
         message: "Invalid email or password",
+        data: {
+          customerEmailId: customerEmailId,
+          password: password,
+        },
       });
     }
   }

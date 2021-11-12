@@ -7,6 +7,11 @@ const emiSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    agent: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     loan: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
