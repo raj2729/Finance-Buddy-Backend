@@ -177,8 +177,8 @@ const sendMobileOtp = asyncHandler(async (req, res) => {
     client.messages
       .create({
         from: "+12162421648",
-        to: "+91" + mobileNumber.toString(),
-        body: `Welcome to Full Stack Simplified. Your OTP for mobile number verification is ${otpCode}. Otp is valid for the next 5 minutes.`,
+        to: "+919920521656",
+        body: `Welcome to Finance Buddy. Your OTP for mobile number verification is ${otpCode}. Otp is valid for the next 5 minutes.`,
       })
       .then((message) => console.log(message.sid));
 
@@ -257,10 +257,18 @@ const sendWhatsappMessage = asyncHandler(async (req, res) => {
   //     }
   //   }
   // );
+  const otpCode = Math.floor(Math.random() * 1000000 + 1);
+  const otpData = new Otp({
+    mobileNumber: mobileNumber,
+    otpCode: otpCode,
+    expiresIn: new Date().getTime() + 300 * 1000,
+  });
+  console.log(mobileNumber);
+  const response = await otpData.save();
   client.messages
     .create({
       from: "whatsapp:+14155238886",
-      body: "Hi Jigar! Congratulaions your phone has been hacked. Pay 2 crore to Raj to unlock your data",
+      body: `Welcome to Finance Buddy. Your OTP for mobile number verification is ${otpCode}. Otp is valid for the next 5 minutes.`,
       to: "whatsapp:+918291114975",
     })
     .then((message) => console.log(message.sid));
