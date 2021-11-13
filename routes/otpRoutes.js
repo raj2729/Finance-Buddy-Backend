@@ -8,6 +8,7 @@ const {
   sendWhatsappMessage,
   sendEmailEMIReminder,
   sendMobileEMIReminder,
+  sendPaymentLink,
 } = require("../controllers/otpControllers");
 
 const router = express.Router();
@@ -32,5 +33,8 @@ router.route("/sendEmailEMIReminder").post(sendEmailEMIReminder);
 
 // Send Mobile EMI Reminder
 router.route("/sendMobileEMIReminder").post(sendMobileEMIReminder);
+
+// Send Payment Link
+router.route("/sendPaymentLink").post(sendPaymentLink);
 
 module.exports = router;

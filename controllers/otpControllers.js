@@ -340,6 +340,31 @@ const sendEmailEMIReminder = asyncHandler(async (req, res) => {
   }
 });
 
+// 6. Send Payment Link
+const sendPaymentLink = asyncHandler(async (req, res) => {
+  const { mobileNumber, date, customerName, amount } = req.body;
+
+  try {
+    client.messages
+      .create({
+        from: "+12162421648",
+        to: "+917977757495",
+        body: `Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Payment Link: "https://rzp.io/l/P6XaLNke". Kindly complete your payment on time. Thank you! Team Finance Buddy`,
+      })
+      .then((message) => console.log(message.sid));
+
+    res.status(200).json({
+      success: true,
+      data: "Message sent",
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      data: "Error in sending SMS",
+    });
+  }
+});
+
 module.exports = {
   sendEmail,
   checkOtp,
@@ -348,4 +373,5 @@ module.exports = {
   sendWhatsappMessage,
   sendMobileEMIReminder,
   sendEmailEMIReminder,
+  sendPaymentLink,
 };
