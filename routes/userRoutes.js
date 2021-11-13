@@ -7,6 +7,8 @@ const {
   getAllOrderDetailsOfUser,
   getAllEMIDetailsOfALoan,
   getUserDetailsFromAgent,
+  getAllAssignedEMISOFAgent,
+  getAllUnpaidAssignedEMISOFAgent,
 } = require("../controllers/userControllers");
 
 const { protect } = require("../middlewares/protectedRoutes");
@@ -32,5 +34,15 @@ router.route("/userEMIDetails/:id").get(protect, getAllEMIDetailsOfALoan);
 router
   .route("/getUserDetailsFromAgent/:id")
   .get(protect, getUserDetailsFromAgent);
+
+// Get all assigned EMI details to Agent
+router
+  .route("/getAllAssignedEMISOFAgent")
+  .get(protect, getAllAssignedEMISOFAgent);
+
+// Get all unpaid assigned EMI details to Agent
+router
+  .route("/getAllUnpaidAssignedEMISOFAgent")
+  .get(protect, getAllUnpaidAssignedEMISOFAgent);
 
 module.exports = router;

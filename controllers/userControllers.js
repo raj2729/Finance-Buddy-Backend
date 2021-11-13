@@ -188,6 +188,36 @@ const getAllEMIDetailsOfALoan = asyncHandler(async (req, res) => {
   }
 });
 
+// getAllAssignedEMISOFAgent
+const getAllAssignedEMISOFAgent = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({ agent: req.user._id });
+  if (emis.length > 0) {
+    res.status(200).json({
+      success: true,
+      data: emis,
+    });
+  } else {
+    res.status(400).json({
+      message: "No EMI's found",
+    });
+  }
+});
+
+// getAllUnpaidAssignedEMISOFAgent
+const getAllUnpaidAssignedEMISOFAgent = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({ agent: req.user._id, isPaid: false });
+  if (emis.length > 0) {
+    res.status(200).json({
+      success: true,
+      data: emis,
+    });
+  } else {
+    res.status(400).json({
+      message: "No EMI's found",
+    });
+  }
+});
+
 module.exports = {
   userLogin,
   getUserDetails,
@@ -195,4 +225,6 @@ module.exports = {
   getAllOrderDetailsOfUser,
   getAllEMIDetailsOfALoan,
   getUserDetailsFromAgent,
+  getAllAssignedEMISOFAgent,
+  getAllUnpaidAssignedEMISOFAgent,
 };
