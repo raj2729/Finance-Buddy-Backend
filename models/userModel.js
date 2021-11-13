@@ -44,6 +44,28 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    propertyArea: {
+      type: String,
+      required: true,
+    },
+    applicantIncome: {
+      type: String,
+      required: true,
+    },
+    isSelfEmployed: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    cibilScore: {
+      type: Number,
+      required: true,
+    },
+    dependents: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
   },
   {
     timestamps: true,

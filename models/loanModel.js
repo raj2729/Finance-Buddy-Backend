@@ -14,14 +14,6 @@ const loanSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    features: [
-      {
-        name: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
   },
   {
     timestamps: true,

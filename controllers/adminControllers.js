@@ -15,7 +15,19 @@ List of Controllers
 */
 // Get all user details - Admin Protected Route
 const getAllUserDetails = asyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({ role: "user" });
+  if (users.length > 0) {
+    res.status(200).json(users);
+  } else {
+    res.status(400).json({
+      message: "No user found",
+    });
+  }
+});
+
+// Get all agent details - Admin Protected Route
+const getAllAgentDetails = asyncHandler(async (req, res) => {
+  const users = await User.find({ role: "agent" });
   if (users.length > 0) {
     res.status(200).json(users);
   } else {
@@ -78,6 +90,11 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
     mobileNumber,
     address,
     profilePicture,
+    propertyArea,
+    applicantIncome,
+    isSelfEmployed,
+    cibilScore,
+    dependents,
   } = req.body;
 
   const userExist = await User.findOne({ email });
@@ -94,13 +111,18 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
       mobileNumber,
       address,
       profilePicture,
+      propertyArea,
+      applicantIncome,
+      isSelfEmployed,
+      cibilScore,
+      dependents,
     });
     // const userId = user._id;
     if (user) {
       const output = `
       '<h2>Welcome to Finance Buddy</h2>
     <p>You have registeration has been successful</p>
-    <h3>Your Account Details:</h3>
+    <h3>Your Details:</h3>
     <ul>
       <li>Name : ${req.body.name}</li>
       <li>Email : ${req.body.email}</li>
@@ -108,6 +130,10 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
       <li>Mobile Number : ${req.body.mobileNumber}</li>
       <li>Password : ${req.body.password}</li>
       <li>Address : ${req.body.address}</li>
+      <li>Property Area : ${req.body.propertyArea}</li>
+      <li>Income Details : ${req.body.applicantIncome}</li>
+      <li>Cibil Score : ${req.body.cibilScore}</li>
+      <li>Dependents : ${req.body.dependents}</li>
     </ul>
     <p>Please save your account details for future references</p>
     <p></p>
@@ -163,6 +189,11 @@ const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
               role: user.role,
               mobileNumber: user.mobileNumber,
               address: user.address,
+              applicantIncome: user.applicantIncome,
+              customerEmailId: user.customerEmailId,
+              isSelfEmployed: user.isSelfEmployed,
+              cibilScore: user.cibilScore,
+              dependents: user.dependents,
               message: "User Register Successful",
             },
           });
@@ -212,4 +243,5 @@ module.exports = {
   updateOrderStatusToPaid,
   sendEmailToUserOnRegistration,
   createNewLoan,
+  getAllAgentDetails,
 };

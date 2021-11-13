@@ -42,6 +42,10 @@ LIST OF CONTROLLERS
 1. Send email of otp
 2. Check otp
 3. Send message of Otp
+4. Check otp
+5. Send whatsapp message
+6. Send mobile sms reminder for emi payment
+7. Send email of EMI reminder
 */
 
 // 1. Send email of otp
@@ -79,8 +83,8 @@ const sendEmail = asyncHandler(async (req, res) => {
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
-        user: `${process.env.FSS_EMAIL}`, // generated ethereal user
-        pass: `${process.env.FSS_PASSWORD}`, // generated ethereal password
+        user: `${process.env.CODEMOON_EMAIL}`, // generated ethereal user
+        pass: `${process.env.CODEMOON_PASSWORD}`, // generated ethereal password
       },
       // If on localhost
       tls: {
@@ -91,7 +95,7 @@ const sendEmail = asyncHandler(async (req, res) => {
 
     // send mail with defined transport object
     let mailOptions = {
-      from: "Team Full Stack Simplified",
+      from: "Team Finance Buddy",
       to: `${email}`,
       subject: "OTP for email verification ✔",
       html: output,
@@ -240,42 +244,100 @@ const checkMobileOtp = asyncHandler(async (req, res) => {
 
 // 5. Send Whatsapp Message
 const sendWhatsappMessage = asyncHandler(async (req, res) => {
-  // vonage.channel.send(
-  //   { type: "whatsapp", number: 918291114975 },
-  //   { type: "whatsapp", number: 919920521656 },
-  //   {
-  //     content: {
-  //       type: "text",
-  //       text: "Hi Jigar! Congratulaions your phone has been hacked. Pay 2 crore to Raj to unlock your data",
-  //     },
-  //   },
-  //   (err, data) => {
-  //     if (err) {
-  //       console.error(err);
-  //     } else {
-  //       console.log(data.message_uuid);
-  //     }
-  //   }
-  // );
-  const otpCode = Math.floor(Math.random() * 1000000 + 1);
-  const otpData = new Otp({
-    mobileNumber: mobileNumber,
-    otpCode: otpCode,
-    expiresIn: new Date().getTime() + 300 * 1000,
-  });
-  console.log(mobileNumber);
-  const response = await otpData.save();
+  const { mobileNumber, agentName, date, customerName, amount } = req.body;
   client.messages
     .create({
       from: "whatsapp:+14155238886",
-      body: `Welcome to Finance Buddy. Your OTP for mobile number verification is ${otpCode}. Otp is valid for the next 5 minutes.`,
+      body: `Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection. Thank you! Team Finance Buddy`,
       to: "whatsapp:+918291114975",
     })
     .then((message) => console.log(message.sid));
 
   res.status(200).json({
     success: true,
+    data: "Whatsapp Message sent",
   });
+});
+
+// 6. Send mobile sms reminder for emi payment
+const sendMobileEMIReminder = asyncHandler(async (req, res) => {
+  const { mobileNumber, agentName, date, customerName, amount } = req.body;
+
+  try {
+    client.messages
+      .create({
+        from: "+12162421648",
+        to: "+917977757495",
+        body: `Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection. Thank you! Team Finance Buddy`,
+      })
+      .then((message) => console.log(message.sid));
+
+    res.status(200).json({
+      success: true,
+      data: "Message sent",
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      data: "Error in sending SMS",
+    });
+  }
+});
+
+// 7. Send email of EMI reminder
+const sendEmailEMIReminder = asyncHandler(async (req, res) => {
+  const { email, agentName, date, customerName, amount } = req.body;
+
+  try {
+    const output = `
+      '<h2>EMI Reminder</h2>
+      <p>Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection.</p> 
+    <p>Regards</p>
+    <p>Team Full Stack Simplified</p>
+  `;
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+      // host: "smtp.ethereal.email",
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: `${process.env.CODEMOON_EMAIL}`, // generated ethereal user
+        pass: `${process.env.CODEMOON_PASSWORD}`, // generated ethereal password
+      },
+      // If on localhost
+      tls: {
+        rejectUnauthorized: false,
+      },
+      service: "gmail",
+    });
+
+    // send mail with defined transport object
+    let mailOptions = {
+      from: "Team Finance Buddy",
+      to: `${email}`,
+      subject: "EMI Reminder ✔",
+      html: output,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        res.json(error);
+      } else {
+        console.log("Message sent: %s", info.messageId);
+        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+        res.status(200).json({
+          success: true,
+          emailSuccess: true,
+          data: response,
+        });
+      }
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      data: "Email does not exist ",
+    });
+  }
 });
 
 module.exports = {
@@ -284,4 +346,6 @@ module.exports = {
   sendMobileOtp,
   checkMobileOtp,
   sendWhatsappMessage,
+  sendMobileEMIReminder,
+  sendEmailEMIReminder,
 };
