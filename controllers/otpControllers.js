@@ -177,7 +177,7 @@ const sendMobileOtp = asyncHandler(async (req, res) => {
     client.messages
       .create({
         from: "+12162421648",
-        to: "+919920521656",
+        to: "+917977757495",
         body: `Welcome to Finance Buddy. Your OTP for mobile number verification is ${otpCode}. Otp is valid for the next 5 minutes.`,
       })
       .then((message) => console.log(message.sid));
