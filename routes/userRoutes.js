@@ -29,6 +29,8 @@ router.route("/userOrderDetails").get(protect, getAllOrderDetailsOfUser);
 router.route("/userEMIDetails/:id").get(protect, getAllEMIDetailsOfALoan);
 
 // Get particular user from agent
-router.route("/getUserDetailsFromAgent").get(protect, getUserDetailsFromAgent);
+router
+  .route("/getUserDetailsFromAgent/:id")
+  .get(protect, getUserDetailsFromAgent);
 
 module.exports = router;
