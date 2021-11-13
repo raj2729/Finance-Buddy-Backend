@@ -8,6 +8,7 @@ const {
   sendEmailToUserOnRegistration,
   createNewLoan,
   getAllAgentDetails,
+  getAllEMIS,
 } = require("../controllers/adminControllers");
 const { addEMI } = require("../controllers/emiControllers");
 const { addOrder, getAllOrders } = require("../controllers/orderControllers");
@@ -47,5 +48,8 @@ router.route("/addEMI").post(adminProtect, addEMI);
 
 // Get all orders
 router.route("/getAllOrders").get(adminProtect, getAllOrders);
+
+// Get all emis
+router.route("/getAllEMIS").get(getAllEMIS);
 
 module.exports = router;

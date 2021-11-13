@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const Order = require("../models/orderModel");
 const Loan = require("../models/loanModel");
 const nodemailer = require("nodemailer");
+const EMI = require("../models/emiModel");
 
 /*
 List of Controllers
@@ -236,6 +237,18 @@ const createNewLoan = asyncHandler(async (req, res) => {
   }
 });
 
+const getAllEMIS = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({});
+  if (emis.length > 0) {
+    res.status(200).json({ success: true, data: emis });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No emis found",
+    });
+  }
+});
+
 module.exports = {
   getAllUserDetails,
   deleteUser,
@@ -244,4 +257,5 @@ module.exports = {
   sendEmailToUserOnRegistration,
   createNewLoan,
   getAllAgentDetails,
+  getAllEMIS,
 };
