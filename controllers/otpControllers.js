@@ -259,7 +259,7 @@ const sendWhatsappMessage = asyncHandler(async (req, res) => {
   });
 });
 
-// 6. Send mobile sms reminder for emi payment
+// 8. Send mobile sms reminder for emi payment
 const sendMobileEMIReminder = asyncHandler(async (req, res) => {
   const { mobileNumber, agentName, date, customerName, amount } = req.body;
 
@@ -291,7 +291,7 @@ const sendEmailEMIReminder = asyncHandler(async (req, res) => {
   try {
     const output = `
       '<h2>EMI Reminder</h2>
-      <p>Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection.</p> 
+      <p>Hello ${customerName}! Your EMI Amount of Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection.</p> 
     <p>Regards</p>
     <p>Team Full Stack Simplified</p>
   `;

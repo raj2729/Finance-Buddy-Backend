@@ -76,6 +76,11 @@ const getUserDetails = asyncHandler(async (req, res) => {
         mobileNumber: user.mobileNumber,
         address: user.address,
         profilePicture: user.profilePicture,
+        propertyArea: user.propertyArea,
+        applicantIncome: user.applicantIncome,
+        isSelfEmployed: user.isSelfEmployed,
+        cibilScore: user.cibilScore,
+        dependents: user.dependents,
       },
     });
   } else {

@@ -7,15 +7,31 @@ const emiSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    userName: {
+      type: String,
+      required: true,
+    },
+    agentAssigned: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     agent: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
+    agentName: {
+      type: String,
+    },
     loan: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Loan",
+    },
+    loanName: {
+      type: String,
+      required: true,
     },
     order: {
       type: mongoose.Schema.Types.ObjectId,
@@ -25,6 +41,11 @@ const emiSchema = mongoose.Schema(
     emiInstallmentNumber: {
       type: Number,
       required: true,
+    },
+    inPTP: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     amount: {
       type: Number,
@@ -37,10 +58,11 @@ const emiSchema = mongoose.Schema(
       default: false,
     },
     paidAt: {
-      type: Date,
+      type: String,
     },
     lastDate: {
-      type: Date,
+      type: String,
+      required: true,
     },
   },
   {

@@ -5,46 +5,27 @@ const Order = require("../models/orderModel");
 
 // Create order - Only for logged in users
 const addOrder = asyncHandler(async (req, res) => {
-  const { orderItems, shippingAddress, paymentMethod } = req.body;
+  const { user, userName, loan, loanName, totalInstallments } = req.body;
 
-  if (orderItems && orderItems.length === 0) {
-    res.status(400);
-    throw new Error("Please add products");
-  } else {
-    var itemsPrice = Number(
-      orderItems.reduce((acc, item) => acc + item.price, 0)
-    );
-    var taxPrice = Number(0.15 * itemsPrice);
-    var shippingPrice = Number(itemsPrice > 500 ? 0 : 50);
-    var totalPrice =
-      Number(itemsPrice) + Number(taxPrice) + Number(shippingPrice);
+  // console.log(itemsPrice);
+  const order = new Order({
+    user,
+    userName,
+    loan,
+    loanName,
+    totalInstallments,
+  });
 
-    // console.log(itemsPrice);
-    const order = new Order({
-      orderItems,
-      user: req.user._id,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-    });
+  const createOrder = await order.save();
 
-    const createOrder = await order.save();
-
-    res.status(201).json({
-      _id: createOrder._id,
-      orderItems: createOrder.orderItems,
-      user: createOrder.user,
-      shippingAddress: createOrder.shippingAddress,
-      paymentMethod: createOrder.paymentMethod,
-      itemsPrice: createOrder.itemsPrice,
-      taxPrice: createOrder.taxPrice,
-      shippingPrice: createOrder.shippingPrice,
-      totalPrice: createOrder.totalPrice,
-    });
-  }
+  res.status(201).json({
+    _id: createOrder._id,
+    user: createOrder.user,
+    userName: createOrder.userName,
+    loan: createOrder.loan,
+    loanName: createOrder.loanName,
+    totalInstallments: createOrder.totalInstallments,
+  });
 });
 
 // Get details of a particular order for user - Only logged in users
@@ -69,13 +50,28 @@ const getOrder = asyncHandler(async (req, res) => {
 });
 
 // Get details of all orders for user - Only logged in users
-const getAllOrders = asyncHandler(async (req, res) => {
+const getAllOrdersOfUser = asyncHandler(async (req, res) => {
+  const ID = req.params.id;
   const userId = req.user._id.toString();
   const orders = await Order.find({ user: userId });
   if (orders.length > 0) {
-    res.status(200).json(orders);
+    res.status(200).json({ success: true, data: orders });
   } else {
     res.status(404).json({
+      success: false,
+      message: "No Orders found",
+    });
+  }
+});
+
+// Get details of all orders of all users - Only logged in users
+const getAllOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({});
+  if (orders.length > 0) {
+    res.status(200).json({ success: true, data: orders });
+  } else {
+    res.status(404).json({
+      success: false,
       message: "No Orders found",
     });
   }
@@ -144,7 +140,8 @@ const cancelOrder = asyncHandler(async (req, res) => {
 module.exports = {
   addOrder,
   getOrder,
-  getAllOrders,
+  getAllOrdersOfUser,
   updateOrderDetails,
   cancelOrder,
+  getAllOrders,
 };

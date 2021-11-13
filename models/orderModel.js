@@ -7,46 +7,23 @@ const orderSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    userName: {
+      type: String,
+      required: true,
+    },
     loan: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Loan",
     },
+    loanName: {
+      type: String,
+      required: true,
+    },
     totalInstallments: {
       type: Number,
       required: true,
       default: 12,
-    },
-    installmentsPaid: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    paymentMethod: {
-      type: String,
-      required: true,
-    },
-    paymentResult: {
-      id: {
-        type: String,
-      },
-      status: {
-        type: String,
-      },
-      update_time: {
-        type: String,
-      },
-      email_address: {
-        type: String,
-      },
-    },
-    isPaid: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    paidAt: {
-      type: Date,
     },
   },
   {

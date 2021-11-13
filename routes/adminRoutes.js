@@ -9,6 +9,8 @@ const {
   createNewLoan,
   getAllAgentDetails,
 } = require("../controllers/adminControllers");
+const { addEMI } = require("../controllers/emiControllers");
+const { addOrder, getAllOrders } = require("../controllers/orderControllers");
 
 const { adminProtect } = require("../middlewares/protectedRoutes");
 
@@ -36,5 +38,14 @@ router
   .post(adminProtect, sendEmailToUserOnRegistration);
 
 router.route("/createNewLoan").post(adminProtect, createNewLoan);
+
+// Create new order
+router.route("/addOrder").post(adminProtect, addOrder);
+
+// Create new EMI
+router.route("/addEMI").post(adminProtect, addEMI);
+
+// Get all orders
+router.route("/getAllOrders").get(adminProtect, getAllOrders);
 
 module.exports = router;

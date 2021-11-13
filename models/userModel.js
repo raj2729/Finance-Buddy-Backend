@@ -49,7 +49,7 @@ const userSchema = mongoose.Schema(
       required: true,
     },
     applicantIncome: {
-      type: String,
+      type: Number,
       required: true,
     },
     isSelfEmployed: {
@@ -58,7 +58,7 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     cibilScore: {
-      type: Number,
+      type: String,
       required: true,
     },
     dependents: {
