@@ -9,6 +9,8 @@ const {
   getUserDetailsFromAgent,
   getAllAssignedEMISOFAgent,
   getAllUnpaidAssignedEMISOFAgent,
+  getAllPaidEmisOfUserFromUser,
+  getAllPaidEmisOfUserFromAdmin,
 } = require("../controllers/userControllers");
 
 const { protect } = require("../middlewares/protectedRoutes");
@@ -44,5 +46,15 @@ router
 router
   .route("/getAllUnpaidAssignedEMISOFAgent")
   .get(protect, getAllUnpaidAssignedEMISOFAgent);
+
+// Get all Paid EMI details of a user - ADMIN Side
+router
+  .route("/getAllPaidEmisOfUserFromAdmin/:id")
+  .get(getAllPaidEmisOfUserFromAdmin);
+
+// Get all Paid EMI details of a user - USER Side
+router
+  .route("/getAllPaidEmisOfUserFromUser")
+  .get(protect, getAllPaidEmisOfUserFromUser);
 
 module.exports = router;

@@ -218,6 +218,36 @@ const getAllUnpaidAssignedEMISOFAgent = asyncHandler(async (req, res) => {
   }
 });
 
+// getAllPaidEmisOfUser - ADMIN Side
+const getAllPaidEmisOfUserFromAdmin = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({ isPaid: true, user: req.params.id });
+  if (emis.length > 0) {
+    res.status(200).json({
+      success: true,
+      data: emis,
+    });
+  } else {
+    res.status(400).json({
+      message: "No EMI's found",
+    });
+  }
+});
+
+// getAllPaidEmisOfUser - USER Side
+const getAllPaidEmisOfUserFromUser = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({ isPaid: true, user: req.user._id });
+  if (emis.length > 0) {
+    res.status(200).json({
+      success: true,
+      data: emis,
+    });
+  } else {
+    res.status(400).json({
+      message: "No EMI's found",
+    });
+  }
+});
+
 module.exports = {
   userLogin,
   getUserDetails,
@@ -227,4 +257,6 @@ module.exports = {
   getUserDetailsFromAgent,
   getAllAssignedEMISOFAgent,
   getAllUnpaidAssignedEMISOFAgent,
+  getAllPaidEmisOfUserFromAdmin,
+  getAllPaidEmisOfUserFromUser,
 };
