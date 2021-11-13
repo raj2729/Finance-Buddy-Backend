@@ -10,6 +10,7 @@ const {
   sendMobileEMIReminder,
   sendPaymentLink,
 } = require("../controllers/otpControllers");
+const { protect } = require("../middlewares/protectedRoutes");
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.route("/checkMobileOtp").post(checkMobileOtp);
 router.route("/sendWhatsappMessage").post(sendWhatsappMessage);
 
 // Send Email EMI Reminder
-router.route("/sendEmailEMIReminder").post(sendEmailEMIReminder);
+router.route("/sendEmailEMIReminder").post(protect, sendEmailEMIReminder);
 
 // Send Mobile EMI Reminder
 router.route("/sendMobileEMIReminder").post(sendMobileEMIReminder);

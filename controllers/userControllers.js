@@ -91,7 +91,7 @@ const getUserDetails = asyncHandler(async (req, res) => {
   }
 });
 
-// User can see his/her details - Protected Route
+// Agent can see his/her details - Protected Route
 const getUserDetailsFromAgent = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
   if (user) {
