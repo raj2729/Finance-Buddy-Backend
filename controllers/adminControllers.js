@@ -249,6 +249,18 @@ const getAllEMIS = asyncHandler(async (req, res) => {
   }
 });
 
+const getPTPList = asyncHandler(async (req, res) => {
+  const emis = await EMI.find({ inPTP: true });
+  if (emis.length > 0) {
+    res.status(200).json({ success: true, data: emis });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No emis found",
+    });
+  }
+});
+
 module.exports = {
   getAllUserDetails,
   deleteUser,
@@ -258,4 +270,5 @@ module.exports = {
   createNewLoan,
   getAllAgentDetails,
   getAllEMIS,
+  getPTPList,
 };

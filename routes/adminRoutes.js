@@ -9,6 +9,7 @@ const {
   createNewLoan,
   getAllAgentDetails,
   getAllEMIS,
+  getPTPList,
 } = require("../controllers/adminControllers");
 const { addEMI } = require("../controllers/emiControllers");
 const { addOrder, getAllOrders } = require("../controllers/orderControllers");
@@ -51,5 +52,8 @@ router.route("/getAllOrders").get(adminProtect, getAllOrders);
 
 // Get all emis
 router.route("/getAllEMIS").get(getAllEMIS);
+
+// Get PTPList
+router.route("/getPTPList").get(getPTPList);
 
 module.exports = router;
