@@ -91,6 +91,36 @@ const getUserDetails = asyncHandler(async (req, res) => {
   }
 });
 
+// User can see his/her details - Protected Route
+const getUserDetailsFromAgent = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.status(200).json({
+      success: true,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        customerEmailId: user.customerEmailId,
+        role: user.role,
+        mobileNumber: user.mobileNumber,
+        address: user.address,
+        profilePicture: user.profilePicture,
+        propertyArea: user.propertyArea,
+        applicantIncome: user.applicantIncome,
+        isSelfEmployed: user.isSelfEmployed,
+        cibilScore: user.cibilScore,
+        dependents: user.dependents,
+      },
+    });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "User not Found",
+    });
+  }
+});
+
 // User updates his/her own details
 const updateUserDetails = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
@@ -164,4 +194,5 @@ module.exports = {
   updateUserDetails,
   getAllOrderDetailsOfUser,
   getAllEMIDetailsOfALoan,
+  getUserDetailsFromAgent,
 };

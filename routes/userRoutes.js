@@ -6,6 +6,7 @@ const {
   updateUserDetails,
   getAllOrderDetailsOfUser,
   getAllEMIDetailsOfALoan,
+  getUserDetailsFromAgent,
 } = require("../controllers/userControllers");
 
 const { protect } = require("../middlewares/protectedRoutes");
@@ -26,5 +27,8 @@ router.route("/userOrderDetails").get(protect, getAllOrderDetailsOfUser);
 
 // Get all EMI details of a loan
 router.route("/userEMIDetails/:id").get(protect, getAllEMIDetailsOfALoan);
+
+// Get particular user from agent
+router.route("/getUserDetailsFromAgent").get(protect, getUserDetailsFromAgent);
 
 module.exports = router;
