@@ -21,7 +21,7 @@ const {
   getAllPaidEmisOfUserFromAdmin,
 } = require("../controllers/userControllers");
 
-const { protect } = require("../middlewares/protectedRoutes");
+const { protect, adminProtect } = require("../middlewares/protectedRoutes");
 
 const router = express.Router();
 
@@ -66,15 +66,15 @@ router
   .get(protect, getAllPaidEmisOfUserFromUser);
 
 // Agent - Update EMI status to pending after sending payment link
-router.route("/updateEMIToPending/:id").post(protect, updateEMIToPending);
+router.route("/updateEMIToPending/:id").put(protect, updateEMIToPending);
 
 // Agent - Add EMI to PTP
-router.route("/addEMIToPTP/:id").post(protect, addEMIToPTP);
+router.route("/addEMIToPTP/:id").put(protect, addEMIToPTP);
 
-// Get all Loans of USer - Logged in user
+// Get all Loans of User - Logged in user
 router.route("/getAllLoansOfUser").get(protect, getAllLoansOfUser);
 
-// Get all EMI's of loans of USer - Logged in user
+// Get all EMI's of loans of User - Logged in user
 router.route("/getAllEMIOfLoanOfUser/:id").get(protect, getAllEMIOfLoanOfUser);
 
 module.exports = router;

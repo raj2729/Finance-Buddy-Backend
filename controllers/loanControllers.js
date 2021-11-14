@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const Order = require("../models/orderModel");
 const Loan = require("../models/loanModel");
+const EMI = require("../models/emiModel");
 
 const createNewLoan = asyncHandler(async (req, res) => {
   const { name, description, typeOfLoan, features } = req.body;
@@ -49,7 +50,7 @@ const getAllLoansOfUser = asyncHandler(async (req, res) => {
 // Get details of all Loans for user - Only logged in users
 const getAllEMIOfLoanOfUser = asyncHandler(async (req, res) => {
   // const userId = req.user._id.toString();
-  const emisOfLoan = await Order.find({
+  const emisOfLoan = await EMI.find({
     user: req.user._id,
     loan: req.params.id,
   });
