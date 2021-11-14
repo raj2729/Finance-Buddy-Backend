@@ -57,12 +57,6 @@ const emiSchema = mongoose.Schema(
       required: true,
       default: false,
     },
-    paymentStatus: {
-      type: String,
-      required: true,
-      default: "unpaid",
-      // values acceptable here: unpaid, pending, paid
-    },
     paidAt: {
       type: String,
     },

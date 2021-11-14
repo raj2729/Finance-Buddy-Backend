@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     propertyArea: {
-      type: String,
+      type: Number,
       required: true,
     },
     applicantIncome: {
@@ -58,7 +58,7 @@ const userSchema = mongoose.Schema(
       default: false,
     },
     cibilScore: {
-      type: String,
+      type: Number,
       required: true,
     },
     dependents: {
