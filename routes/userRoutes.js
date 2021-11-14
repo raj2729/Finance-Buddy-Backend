@@ -1,4 +1,12 @@
 const express = require("express");
+const {
+  updateEMIToPending,
+  addEMIToPTP,
+} = require("../controllers/emiControllers");
+const {
+  getAllLoansOfUser,
+  getAllEMIOfLoanOfUser,
+} = require("../controllers/loanControllers");
 
 const {
   userLogin,
@@ -56,5 +64,17 @@ router
 router
   .route("/getAllPaidEmisOfUserFromUser")
   .get(protect, getAllPaidEmisOfUserFromUser);
+
+// Agent - Update EMI status to pending after sending payment link
+router.route("/updateEMIToPending/:id").post(protect, updateEMIToPending);
+
+// Agent - Add EMI to PTP
+router.route("/addEMIToPTP/:id").post(protect, addEMIToPTP);
+
+// Get all Loans of USer - Logged in user
+router.route("/getAllLoansOfUser").get(protect, getAllLoansOfUser);
+
+// Get all EMI's of loans of USer - Logged in user
+router.route("/getAllEMIOfLoanOfUser/:id").get(protect, getAllEMIOfLoanOfUser);
 
 module.exports = router;

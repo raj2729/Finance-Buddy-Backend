@@ -10,6 +10,7 @@ const adminRoutes = require("./routes/adminRoutes");
 // const productRoutes = require("./routes/productRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const otpRoutes = require("./routes/otpRoutes");
+const todoRoutes = require("./routes/todoRoutes");
 
 // express application
 const app = express();
@@ -27,7 +28,9 @@ app.use(express.json());
 const PORT = process.env.PORT;
 
 app.get("/", (req, res) => {
-  res.send("<h1>Welcome to node server</h1>");
+  res.send(
+    "<h1>Welcome to Finance Buddy Backend server for TVS Credit I.T. Challenge</h1>"
+  );
 });
 
 app.use("/users", userRoutes);
@@ -35,6 +38,7 @@ app.use("/admin", adminRoutes);
 // app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/otp", otpRoutes);
+app.use("/todo", todoRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`.cyan);

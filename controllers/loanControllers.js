@@ -31,6 +31,40 @@ const createNewLoan = asyncHandler(async (req, res) => {
   }
 });
 
+// Get details of all Loans for user - Only logged in users
+const getAllLoansOfUser = asyncHandler(async (req, res) => {
+  const ID = req.params.id;
+  const userId = req.user._id.toString();
+  const orders = await Order.find({ user: req.user._id });
+  if (orders.length > 0) {
+    res.status(200).json({ success: true, data: orders });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No orders found",
+    });
+  }
+});
+
+// Get details of all Loans for user - Only logged in users
+const getAllEMIOfLoanOfUser = asyncHandler(async (req, res) => {
+  // const userId = req.user._id.toString();
+  const emisOfLoan = await Order.find({
+    user: req.user._id,
+    loan: req.params.id,
+  });
+  if (emisOfLoan.length > 0) {
+    res.status(200).json({ success: true, data: emisOfLoan });
+  } else {
+    res.status(404).json({
+      success: false,
+      message: "No emisOfLoan found",
+    });
+  }
+});
+
 module.exports = {
   createNewLoan,
+  getAllLoansOfUser,
+  getAllEMIOfLoanOfUser,
 };

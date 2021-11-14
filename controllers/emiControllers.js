@@ -19,6 +19,7 @@ const addEMI = asyncHandler(async (req, res) => {
       isPaid,
       paidAt,
       lastDate,
+      paymentStatus,
     } = req.body;
 
     // console.log(itemsPrice);
@@ -37,6 +38,7 @@ const addEMI = asyncHandler(async (req, res) => {
       isPaid,
       paidAt,
       lastDate,
+      paymentStatus,
     });
 
     const createEMI = await emi.save();
@@ -57,6 +59,7 @@ const addEMI = asyncHandler(async (req, res) => {
       isPaid: createEMI.isPaid,
       paidAt: createEMI.paidAt,
       lastDate: createEMI.lastDate,
+      paymentStatus: createEMI.paymentStatus,
     });
   } catch (error) {
     res.status(400).json({
@@ -66,6 +69,44 @@ const addEMI = asyncHandler(async (req, res) => {
   }
 });
 
+// Agent - Update EMI status to pending after sending payment link
+const updateEMIToPending = asyncHandler(async (req, res) => {
+  const emi = await EMI.findById(req.params.id);
+  if (emi) {
+    emi.paymentStatus = "pending";
+    const updatedEmi = await emi.save();
+    res.status(200).json({
+      success: true,
+      data: updatedEmi,
+    });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: "No EMI found",
+    });
+  }
+});
+
+// Agent - Add EMI to PTP
+const addEMIToPTP = asyncHandler(async (req, res) => {
+  const emi = await EMI.findById(req.params.id);
+  if (emi) {
+    emi.inPTP = true;
+    const updatedEmi = await emi.save();
+    res.status(200).json({
+      success: true,
+      data: updatedEmi,
+    });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: "No EMI found",
+    });
+  }
+});
+
 module.exports = {
   addEMI,
+  updateEMIToPending,
+  addEMIToPTP,
 };
