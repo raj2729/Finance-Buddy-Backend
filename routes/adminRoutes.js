@@ -10,6 +10,7 @@ const {
   getAllAgentDetails,
   getAllEMIS,
   getPTPList,
+  updateEMIToPaid,
 } = require("../controllers/adminControllers");
 const { addEMI } = require("../controllers/emiControllers");
 const { addOrder, getAllOrders } = require("../controllers/orderControllers");
@@ -31,9 +32,7 @@ router.route("/deleteUser/:id").delete(adminProtect, deleteUser);
 router.route("/allOrderDetails").get(adminProtect, getAllOrderDetails);
 
 // Update Order status to paid after the Online Payment is done
-router
-  .route("/updateOrderStatusToPaid/:id")
-  .put(adminProtect, updateOrderStatusToPaid);
+router.route("/updateOrderStatusToPaid/:id").put(adminProtect, updateEMIToPaid);
 
 router
   .route("/sendEmailToUserOnRegistration")

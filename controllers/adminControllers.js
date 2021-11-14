@@ -65,22 +65,6 @@ const getAllOrderDetails = asyncHandler(async (req, res) => {
   }
 });
 
-// Update Order status to paid after the Online Payment is done
-const updateOrderStatusToPaid = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id);
-  if (order) {
-    order.isPaid = true;
-    order.currentStatus = "Order is received and is being processed";
-    order.paidAt = new Date();
-    const updatedOrder = await order.save();
-    res.status(200).json(updatedOrder);
-  } else {
-    res.status(400).json({
-      message: "No Order found",
-    });
-  }
-});
-
 const sendEmailToUserOnRegistration = asyncHandler(async (req, res) => {
   const {
     email,
@@ -261,14 +245,33 @@ const getPTPList = asyncHandler(async (req, res) => {
   }
 });
 
+// Update EMI status to paid after successful payment link
+const updateEMIToPaid = asyncHandler(async (req, res) => {
+  const emi = await EMI.findById(req.params.id);
+  if (emi) {
+    emi.paymentStatus = "paid";
+    emi.isPaid = true;
+    const updatedEmi = await emi.save();
+    res.status(200).json({
+      success: true,
+      data: updatedEmi,
+    });
+  } else {
+    res.status(400).json({
+      success: false,
+      message: "No EMI found",
+    });
+  }
+});
+
 module.exports = {
   getAllUserDetails,
   deleteUser,
   getAllOrderDetails,
-  updateOrderStatusToPaid,
   sendEmailToUserOnRegistration,
   createNewLoan,
   getAllAgentDetails,
   getAllEMIS,
   getPTPList,
+  updateEMIToPaid,
 };
