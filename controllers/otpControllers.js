@@ -248,7 +248,7 @@ const sendWhatsappMessage = asyncHandler(async (req, res) => {
   client.messages
     .create({
       from: "whatsapp:+14155238886",
-      body: `Hello ${customerName}! Your EMI of Amount Rs 8000 is due on 02/12/2021. Collection Agent: Jigar Shah will be visiting on  ${date} for the amount collection. Thank you! Team Finance Buddy`,
+      body: `Hello ${customerName}! Your EMI of Amount Rs 8000 is due on 02/12/2021. Collection Agent: Jigar Shah will be visiting on 02/12/2021 for the amount collection. Thank you! Team Finance Buddy`,
       to: "whatsapp:+919920521656",
     })
     .then((message) => console.log(message.sid));
