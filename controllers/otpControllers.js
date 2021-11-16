@@ -35,7 +35,7 @@ const wbm = require("wbm");
 
 var client = require("twilio")(
   "AC6c6e37b58ff6a090804d0c645636fcaf",
-  "9c86d240997c2d4a5f0f48752d41d4d2"
+  "c692b8fbe0e1f5ad77d036d4dccf1d19"
 );
 /*
 LIST OF CONTROLLERS
@@ -248,7 +248,7 @@ const sendWhatsappMessage = asyncHandler(async (req, res) => {
   client.messages
     .create({
       from: "whatsapp:+14155238886",
-      body: `Hello ${customerName}! Your EMI of Amount Rs 8000 is due on 02/12/2021. Collection Agent: Jigar Shah will be visiting on 02/12/2021 for the amount collection. Thank you! Team Finance Buddy`,
+      body: `Hello ${customerName}! Your EMI of Amount Rs 8305 is due on 02/12/2021. Collection Agent: Jigar Shah will be visiting on 02/12/2021 for the amount collection. Thank you! Team Finance Buddy`,
       to: "whatsapp:+919920521656",
     })
     .then((message) => console.log(message.sid));
@@ -268,7 +268,7 @@ const sendMobileEMIReminder = asyncHandler(async (req, res) => {
       .create({
         from: "+12162421648",
         to: "+917977757495",
-        body: `Hello ${customerName}! Your EMI of Amount Rs${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection. Thank you! Team Finance Buddy`,
+        body: `Hello ${customerName}! Your EMI of Amount Rs 8305 is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection. Thank you! Team Finance Buddy`,
       })
       .then((message) => console.log(message.sid));
 
@@ -292,7 +292,7 @@ const sendEmailEMIReminder = asyncHandler(async (req, res) => {
   try {
     const output = `
       '<h2>EMI Reminder</h2>
-      <p>Hello ${customerName}! Your EMI Amount of Rs ${amount} is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection.</p> 
+      <p>Hello ${customerName}! Your EMI Amount of Rs 8305 is due on ${date}. Collection Agent ${agentName} will be visiting on  ${date} for the amount collection.</p> 
     <p>Regards</p>
     <p>Team Full Stack Simplified</p>
   `;
