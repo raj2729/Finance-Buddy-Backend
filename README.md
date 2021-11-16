@@ -56,3 +56,6 @@
 ```
 npm start
 ```
+
+## Deployment
+The Backend API Endpoints are deployed on Heroku: https://finance-buddy-api.herokuapp.com/
