@@ -14,6 +14,7 @@ const todoRoutes = require("./routes/todoRoutes");
 
 // express application
 const app = express();
+// express application
 
 app.use(cors());
 
